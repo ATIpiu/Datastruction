@@ -13,9 +13,10 @@ int main()
 	tree.insert(c);
 	d = new TreeNode<int>(3);
 	tree.insert(d);
-	e = new TreeNode<int>(-1);
+	e = new TreeNode<int>(4);
 	tree.insert(e);
 	/*if (tree.getBrother(a) != nullptr)
 	cout << tree.getBrother(b)->data << endl;*/
 	cout << tree.getLeavesNodeNum(tree.getRoot()) << endl;
+	cout << tree.getHeight() << endl;
 }

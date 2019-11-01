@@ -24,6 +24,8 @@ public:
 	void inOrder() { this->inOrder(root); }
 	void levelOrde() { this->levelOrde(root); }
 	void postOrder() { this->postOrder(root); }
+	int getHeight(TreeNode<T> *Root);
+	int getHeight() { return this->getHeight(root) - 1; }
 	TreeNode<T>* getBrother(TreeNode<T>* temp);
 	TreeNode<T>* getFather(TreeNode<T>* temp, TreeNode<T>* Root);
 	TreeNode<T>* getFather(TreeNode<T>* temp){		return this->getFather(temp, root);}
@@ -118,6 +120,18 @@ inline void MyTree<T>::postOrder(TreeNode<T>* temp)
 		preOrder(temp->rightChild);
 		std::cout << temp->data << " ";
 	}
+}
+
+template<class T>
+inline int MyTree<T>::getHeight(TreeNode<T> *Root)
+{
+	if (Root == nullptr)
+	{
+		return 0;
+	}
+	int lheight = getHeight(Root->lefcChild);
+	int rheight = getHeight(Root->rightChild);
+	return (lheight > rheight ? lheight : rheight)+1;
 }
 
 template<class T>
