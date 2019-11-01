@@ -6,19 +6,32 @@ class MyTree
 {
 private:
 	TreeNode<T> *root;
+protected:
+	int getNodeNum(TreeNode<int>* temp);
+	void inOrder(TreeNode<T>* temp );
+	void levelOrde(TreeNode<T>* temp );
+	void preOrder(TreeNode<T>* temp );
+	void postOrder(TreeNode<T>* temp );
 public:
 	MyTree(TreeNode<T> *Root=NULL)
 	{
 		this->root=Root;
 	}
 	void insert(TreeNode<T> *t,TreeNode<T> *Node);
+	void insert(TreeNode<T>* Node) { this->insert(root, Node); }
 	TreeNode<T> *getRoot();
-	void preOrder(TreeNode<T>* temp = root);
-	void inOrder(TreeNode<T>* temp = root);
-	void levelOrde(TreeNode<T>* temp = root);
-	void postOrder(TreeNode<T>* temp = root);
+	void preOrder() { this->preOrder(root); }
+	void inOrder() { this->inOrder(root); }
+	void levelOrde() { this->levelOrde(root); }
+	void postOrder() { this->postOrder(root); }
 	TreeNode<T>* getBrother(TreeNode<T>* temp);
 	TreeNode<T>* getFather(TreeNode<T>* temp, TreeNode<T>* Root);
+	TreeNode<T>* getFather(TreeNode<T>* temp){		return this->getFather(temp, root);}
+	TreeNode<T>* getLeftChild(TreeNode<T>* temp);
+	TreeNode<T>* getRightChild(TreeNode<T>* temp);
+	int getDegree(TreeNode<T>* temp);
+	int getLeavesNodeNum(TreeNode<T>* temp);
+	int getNodeNum() { return this->getNodeNum(root); }
 };
 template<class T>
 inline void MyTree<T>::insert(TreeNode<T>* t, TreeNode<T>* Node)
@@ -158,5 +171,54 @@ inline TreeNode<T>* MyTree<T>::getFather(TreeNode<T>* temp, TreeNode<T>*Root)
 		this->getFather(temp, Root->lefcChild);
 		this->getFather(temp, Root->rightChild);
 	}
+	return NULL;
+}
+template<class T>
+inline TreeNode<T>* MyTree<T>::getLeftChild(TreeNode<T>* temp)
+{
+	return temp->lefcChild;
 }
 
+template<class T>
+inline TreeNode<T>* MyTree<T>::getRightChild(TreeNode<T>* temp)
+{
+	return temp->rightChild;
+}
+
+template<class T>
+inline int MyTree<T>::getNodeNum(TreeNode<int>* temp)
+{
+	int t = 0;
+	if (temp != nullptr) {
+		t = 1 + getNodeNum(temp->lefcChild);
+
+		t = t + getNodeNum(temp->rightChild);
+	}
+	return t;
+
+}
+
+template<class T>
+inline int MyTree<T>::getDegree(TreeNode<T>* temp)
+{
+	if (temp == nullptr)
+		return -1;
+	int degree = 0;
+	if (temp->lefcChild != nullptr)
+		degree++;
+	if (temp->rightChild != nullptr)
+		degree++;
+	return degree;
+}
+template<class T>
+inline int MyTree<T>::getLeavesNodeNum(TreeNode<T>* temp)
+{
+	int t = 0;
+	if (temp != nullptr) {
+		if (getDegree(temp) == 0)
+			t += 1;
+		t = t + getLeavesNodeNum(temp->lefcChild);
+		t = t + getLeavesNodeNum(temp->rightChild);
+	}
+	return t;
+}
