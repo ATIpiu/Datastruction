@@ -185,7 +185,6 @@ inline TreeNode<T>* MyTree<T>::getFather(TreeNode<T>* temp, TreeNode<T>*Root)
 		this->getFather(temp, Root->lefcChild);
 		this->getFather(temp, Root->rightChild);
 	}
-	return NULL;
 }
 template<class T>
 inline TreeNode<T>* MyTree<T>::getLeftChild(TreeNode<T>* temp)
