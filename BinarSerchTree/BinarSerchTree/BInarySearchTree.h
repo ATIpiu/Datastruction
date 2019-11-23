@@ -30,8 +30,12 @@ public:
 	void insert(TreeNode<T>* Node) { this->insert(root, Node); }
 	void drop(TreeNode<T>* temp);
 	TreeNode<T>* getFather(TreeNode<T>* temp, TreeNode<T>* Root);
-	TreeNode<T>* FindMax(TreeNode<T>* temp);
+	TreeNode<T>* findMax(TreeNode<T>* temp);
 	void swap(TreeNode<T>* a, TreeNode<T>* b);
+	TreeNode<T>* findElement(T temp,TreeNode<T> *Root);
+	TreeNode<T>* findElement(T temp);
+	TreeNode<T>* getRoot() {return this->root;}
+	static T biSearch(T* a, T t);
 }; 
 
 template<class T>
@@ -125,7 +129,7 @@ inline TreeNode<T>* BInarySearchTree<T>::getFather(TreeNode<T>* temp, TreeNode<T
 }
 
 template<class T>
-inline TreeNode<T>* BInarySearchTree<T>::FindMax(TreeNode<T>* temp)
+inline TreeNode<T>* BInarySearchTree<T>::findMax(TreeNode<T>* temp)
 {
 	if (temp == nullptr) return nullptr;
 	if (temp->rightChild != nullptr)
@@ -148,5 +152,47 @@ inline void BInarySearchTree<T>::swap(TreeNode<T>* a, TreeNode<T>* b)
 	{
 		a_father->rightChild == b;
 	}
+
+}
+
+template<class T>
+inline TreeNode<T>* BInarySearchTree<T>::findElement(T temp,TreeNode<T> *Root)
+{
+	if (temp == Root->data)
+	{
+		return Root;
+	}
+	if (temp < Root->data)
+	{
+		if (Root->lefcChild != nullptr)
+		{
+			findElement(temp, Root->lefcChild);
+		}
+	}
+	else if (temp > Root->data)
+	{
+		if (Root->lefcChild != nullptr)
+		{
+			findElement(temp, Root->rightChild);
+		}
+	}
+}
+
+template<class T>
+inline TreeNode<T>* BInarySearchTree<T>::findElement(T temp)
+{
+	if (this->findElement(temp, this->root) != nullptr)
+		return this->findElement(temp, this->root);
+	else
+	{
+		std::cout << "Not Found" << std::endl;
+		return NULL;
+	}
+	
+}
+
+template<class T>
+inline T BInarySearchTree<T>::biSearch(T* a, T t)
+{
 
 }
